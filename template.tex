@@ -1,0 +1,98 @@
+\documentclass{article}
+
+\usepackage{amsmath, amsthm, amssymb, amsfonts}
+\usepackage{thmtools}
+\usepackage{graphicx}
+\usepackage{setspace}
+\usepackage{geometry}
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{framed}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{tcolorbox}
+
+\colorlet{LightGray}{White!90!Periwinkle}
+\colorlet{LightOrange}{Orange!15}
+\colorlet{LightGreen}{Green!15}
+
+\newcommand{\HRule}[1]{\rule{\linewidth}{#1}}
+
+\declaretheoremstyle[name=Theorem,]{thmsty}
+\declaretheorem[style=thmsty,numberwithin=section]{theorem}
+\tcolorboxenvironment{theorem}{colback=LightGray}
+
+\declaretheoremstyle[name=Proposition,]{prosty}
+\declaretheorem[style=prosty,numberlike=theorem]{proposition}
+\tcolorboxenvironment{proposition}{colback=LightOrange}
+
+\declaretheoremstyle[name=Principle,]{prcpsty}
+\declaretheorem[style=prcpsty,numberlike=theorem]{principle}
+\tcolorboxenvironment{principle}{colback=LightGreen}
+
+\setstretch{1.2}
+\geometry{
+    textheight=9in,
+    textwidth=5.5in,
+    top=1in,
+    headheight=12pt,
+    headsep=25pt,
+    footskip=30pt
+}
+
+% ------------------------------------------------------------------------------
+
+\begin{document}
+
+% ------------------------------------------------------------------------------
+% Cover Page and ToC
+% ------------------------------------------------------------------------------
+
+\title{ \normalsize \textsc{}
+		\\ [2.0cm]
+		\HRule{1.5pt} \\
+		\LARGE \textbf{\uppercase{Relatório do trabalho\\ Banco de Dados Supermercado "Boa Compra"}
+		\HRule{2.0pt} \\ [0.6cm] \LARGE{Ferramentas da Internet} \vspace*{8\baselineskip}}
+		}
+\date{}
+\author{\textbf{Autores:} \\
+		João Carlos Gomes Arcanjo\\
+		Lucas de Oliveira Gonçalves\\
+        Letícia Gabrielle Domingues\\
+        Lívia Lopes Williamson\\
+        Pedro Eduardo Lima Correa\\
+        Silas Mesquita Pedroza\\
+		22/04/2025}
+
+\maketitle
+\newpage
+
+% ------------------------------------------------------------------------------
+
+
+\section{Minimundo Supermercado "Boa Compra":}
+
+\begin{flushleft}
+
+Os donos do supermercado \textbf{Boa Compra} resolveram desenvolver um banco de dados projetado para gerenciar de maneira eficiente os diversos processos do supermercado, como clientes, produtos, compras, fornecedores e funcionários.
+
+A entidade \textbf{Cliente} representa os consumidores do supermercado. Cada cliente possui informações como \textit{nome, CPF, telefone} e \textit{email}. Um cliente pode realizar várias compras, e várias compras podem ser feitas por um cliente, o que estabelece uma relação de 1:N entre Cliente e Compra, com a participação total, já que todo cliente deve realizar pelo menos uma compra, e uma compra deve ser feita por pelo menos um cliente. Além disso, vários clientes podem ter um endereço, como ocorre em uma família, por exemplo. Então, o relacionamento entre Cliente e Endereço é de N:1, sendo a participação de Endereço total, ou seja, cada cliente deve ter pelo menos um endereço registrado.
+
+A entidade \textbf{Endereço} armazena as localizações tanto dos clientes quanto dos fornecedores. Cada endereço tem um \textit{id\_endereço} e inclui informações como \textit{rua, número, bairro, cidade, estado} e \textit{CEP}. O relacionamento entre Endereço e Fornecedor é de N:1, uma vez que um fornecedor pode ter múltiplos endereços, e vários endereços podem ser de um fornecedor. A participação de Endereço é total em ambos os casos, o que significa que todo cliente ou fornecedor deve ter pelo menos um endereço registrado.
+
+Cada \textbf{Compra} possui um \textit{D\_compra} e informações como \textit{data, valor total, valor pago, status de pagamento} e a \textit{forma de pagamento} utilizada. Cada Compra é realizada por um único cliente, e várias compras podem ser feitas por um cliente (relacionamento N:1 entre Compra e Cliente). O pagamento de várias compras é registrado por um \textbf{Caixa}, e um caixa pode registrar várias compras (relacionamento N:1 entre Compra e Caixa). O relacionamento entre Compra e Produto é de N:M, pois uma compra pode envolver vários produtos e um produto pode ser comprado em diversas transações. Além disso, o relacionamento entre essas duas entidades inclui atributos como a \textit{quantidade de produtos adquiridos e o preço unitário de cada item}.
+
+A entidade \textbf{Produto} armazena as informações sobre os itens disponíveis para venda no supermercado. Cada produto tem um \textit{id\_produto} e possui informações como \textit{nome, id\_categoria, descrição, preço} e a \textit{quantidade disponível} em estoque. Os Produtos são agrupados em \textbf{Categorias}, sendo o relacionamento entre Produto e Categoria de N:1, com a participação total, já que todo produto deve ter pelo menos uma categoria, e cada categoria pode conter vários produtos. Além disso, os produtos são fornecidos por \textbf{Fornecedores}, com o relacionamento entre Produto e Fornecedor sendo de N:N, já que um produto pode ser fornecido por vários fornecedores e um fornecedor pode fornecer vários produtos.
+
+A entidade \textbf{Categoria} organiza os produtos por tipo, como alimentos, bebidas ou produtos de limpeza. Cada categoria tem um \textit{id\_categoria}, \textit{nome} e uma \textit{descrição}. O relacionamento entre Categoria e Produto é de 1:N; uma categoria pode agrupar diversos produtos, mas cada produto pertence a apenas uma categoria.
+
+A entidade \textbf{Fornecedor} representa as empresas ou indivíduos que fornecem os produtos ao supermercado. Cada fornecedor possui \textit{id\_fornecedor}, \textit{nome, CNPJ, telefone} e \textit{email}. Os fornecedores podem fornecer diversos produtos, estabelecendo uma relação N:M com a entidade Produto. Além disso, os fornecedores podem ter vários endereços, com o relacionamento entre Fornecedor e Endereço sendo de 1:N, ou seja, um fornecedor pode ter vários endereços registrados.
+
+A entidade \textbf{Funcionário} representa os colaboradores do supermercado. Cada funcionário possui um \textit{nome, CPF, data de admissão} e \textit{salário}. Os Funcionários podem ser divididos em duas classes: \textbf{Caixa} e \textbf{Repositor}, com um relacionamento de especialização total e disjunta, ou seja, cada funcionário é necessariamente um caixa ou repositor, mas nunca ambos ao mesmo tempo. A entidade Caixa possui um \textit{turno} que define o horário de trabalho, e o \textit{numero\_caixa}, que indica o número do caixa em que o funcionário opera, e pode registrar várias Compras, tendo um relacionamento 1:N entre Caixa e Compra. Já a entidade Repositor possui um \textit{turno}, que define o horário de trabalho, e é associado a um \textbf{Setor} pela chave estrangeira \textit{id\_setor} dentro do supermercado, ou seja, o relacionamento é de N:1 entre Repositor e Setor.
+
+A entidade \textbf{Setor} agrupa os repositores de acordo com a área de atuação dentro do supermercado, como hortifrúti, mercearia ou bebidas. Cada setor tem um \textit{id\_setor}, \textit{nome, descrição} e \textit{localização física}. Um setor pode ter vários repositores, com o relacionamento entre Setor e Repositor sendo de 1:N.
+
+\end{flushleft}
+\end{document}
+
